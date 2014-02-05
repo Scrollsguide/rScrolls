@@ -121,7 +121,7 @@ namespace rScrolls
         }
         scroll.SpriteSheetName = "spritesheet-" + spriteSheetCount;
         spriteSheetNames.Add(scroll.SpriteSheetName);
-        if (spriteCount == 20)
+        if (spriteCount == 16)
         {
           g.Dispose();
           spriteSheet.Save("spritesheet-" + spriteSheetCount++ + ".jpg");
