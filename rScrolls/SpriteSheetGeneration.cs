@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -26,7 +27,7 @@ namespace rScrolls
       Console.WriteLine("Reddit Password:");
       string password = Console.ReadLine();
 
-      Console.WriteLine("Gettings list of scrolls.");
+      /*Console.WriteLine("Gettings list of scrolls.");
       List<ScrollWrapper> scrolls = GetScrolls();
       Console.WriteLine(scrolls.Count + " scrolls found.\n");
 
@@ -41,20 +42,27 @@ namespace rScrolls
       Console.WriteLine("Generating CSS.");
       string css = GenerateCSS(scrolls);
       File.WriteAllText("rSrcolls.css", css);
-      Console.WriteLine("CSS generated and saved!");
+      Console.WriteLine("CSS generated and saved!");*/
+
+      List<string> spriteSheets = new List<string>();
+      for (int i = 0; i < 19; i++)
+      {
+        spriteSheets.Add("spritesheet-" + i);
+      }
+      string css = File.ReadAllText("rSrcolls.css");
 
       if (username.Length > 0 && password.Length > 0)
       {
         Reddit reddit = new Reddit();
         AuthenticatedUser me = reddit.LogIn(username, password);
-        Subreddit scrollsSubReddit = reddit.GetSubreddit("/r/Scrolls");
+        Subreddit scrollsSubReddit = reddit.GetSubreddit("/r/liklgames");
         SubredditStyle style = scrollsSubReddit.GetStylesheet();
         foreach (string spriteSheet in spriteSheets)
         {
           byte[] data = File.ReadAllBytes(spriteSheet + ".jpg");
           style.UploadImage(spriteSheet, ImageType.JPEG, data);
         }
-        string newCss = Regex.Split(style.CSS, "/**botcss**/")[0] + css;
+        string newCss = Regex.Split(style.CSS, @"///*/*botcss/*/*//")[0] + css;
         style.CSS = newCss;
         style.UpdateCss();
       }
@@ -124,20 +132,49 @@ namespace rScrolls
         if (spriteCount == 16)
         {
           g.Dispose();
-          spriteSheet.Save("spritesheet-" + spriteSheetCount++ + ".jpg");
+          //spriteSheet.Save("spritesheet-" + spriteSheetCount++ + ".jpg");
+          SaveSpriteSheet(spriteSheet, spriteSheetCount++);
           spriteSheet.Dispose();
           spriteSheet = new Bitmap(spriteWidth * 4, spriteHeight * 4);
           g = Graphics.FromImage(spriteSheet);
+          g.Clear(Color.Transparent);
           locationY = 0;
           locationX = 0;
           spriteCount = 0;
         }
       }
       g.Dispose();
-      spriteSheet.Save("spritesheet-" + spriteSheetCount + ".jpg");
+      //spriteSheet.Save("spritesheet-" + spriteSheetCount + ".jpg");
+      SaveSpriteSheet(spriteSheet, spriteSheetCount);
       spriteSheet.Dispose();
 
       return new List<string>(spriteSheetNames);
+    }
+
+    private static void SaveSpriteSheet(Bitmap bitmap, int count)
+    {
+      ImageCodecInfo jgpEncoder = GetEncoder(ImageFormat.Jpeg);
+
+      Encoder myEncoder = Encoder.Quality;
+      
+      EncoderParameters myEncoderParameters = new EncoderParameters(1);
+
+      EncoderParameter myEncoderParameter = new EncoderParameter(myEncoder, 90L);
+      myEncoderParameters.Param[0] = myEncoderParameter;
+      bitmap.Save("spritesheet-" + count + ".jpg", jgpEncoder, myEncoderParameters);
+    }
+
+    private static ImageCodecInfo GetEncoder(ImageFormat format)
+    {
+      ImageCodecInfo[] codecs = ImageCodecInfo.GetImageDecoders();
+      foreach (ImageCodecInfo codec in codecs)
+      {
+        if (codec.FormatID == format.Guid)
+        {
+          return codec;
+        }
+      }
+      return null;
     }
 
     private static string GenerateCSS(List<ScrollWrapper> scrolls)
