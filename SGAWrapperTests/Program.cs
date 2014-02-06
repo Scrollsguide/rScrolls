@@ -1,6 +1,4 @@
-﻿using SGAWrapper;
-
-namespace SGAWrapperTests
+﻿namespace SGAWrapper.Examples
 {
   class Program
   {

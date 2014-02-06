@@ -7,8 +7,8 @@
     <ProjectGuid>{4FC6C596-EF02-4640-B3A6-5445951865BB}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SGAWrapperTests</RootNamespace>
-    <AssemblyName>SGAWrapperTests</AssemblyName>
+    <RootNamespace>SGAWrapper.Examples</RootNamespace>
+    <AssemblyName>SGAWrapper.Examples</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
