@@ -13,6 +13,8 @@ using RedditSharp;
 
 namespace rScrolls
 {
+
+  // TODO - This needs fixing up to use the new SBAWrapper
   public class SpriteSheetGeneration
   {
     private const string BaseApi = "http://a.scrollsguide.com/";
@@ -27,7 +29,7 @@ namespace rScrolls
       Console.WriteLine("Reddit Password:");
       string password = Console.ReadLine();
 
-      /*Console.WriteLine("Gettings list of scrolls.");
+      Console.WriteLine("Gettings list of scrolls.");
       List<ScrollWrapper> scrolls = GetScrolls();
       Console.WriteLine(scrolls.Count + " scrolls found.\n");
 
@@ -42,14 +44,14 @@ namespace rScrolls
       Console.WriteLine("Generating CSS.");
       string css = GenerateCSS(scrolls);
       File.WriteAllText("rSrcolls.css", css);
-      Console.WriteLine("CSS generated and saved!");*/
+      Console.WriteLine("CSS generated and saved!");
 
-      List<string> spriteSheets = new List<string>();
+      /*List<string> spriteSheets = new List<string>();
       for (int i = 0; i < 19; i++)
       {
         spriteSheets.Add("spritesheet-" + i);
       }
-      string css = File.ReadAllText("rSrcolls.css");
+      string css = File.ReadAllText("rSrcolls.css");*/
 
       if (username.Length > 0 && password.Length > 0)
       {
@@ -132,7 +134,6 @@ namespace rScrolls
         if (spriteCount == 16)
         {
           g.Dispose();
-          //spriteSheet.Save("spritesheet-" + spriteSheetCount++ + ".jpg");
           SaveSpriteSheet(spriteSheet, spriteSheetCount++);
           spriteSheet.Dispose();
           spriteSheet = new Bitmap(spriteWidth * 4, spriteHeight * 4);
@@ -144,7 +145,6 @@ namespace rScrolls
         }
       }
       g.Dispose();
-      //spriteSheet.Save("spritesheet-" + spriteSheetCount + ".jpg");
       SaveSpriteSheet(spriteSheet, spriteSheetCount);
       spriteSheet.Dispose();
 
