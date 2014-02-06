@@ -5,7 +5,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rScrolls", "rScrolls\rScrol
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SGAWrapper", "SGAWrapper\SGAWrapper.csproj", "{493D0B59-F3E7-45A6-9D7F-01CBA03C0F21}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SGAWrapper Examples", "SGAWrapperTests\SGAWrapper Examples.csproj", "{4FC6C596-EF02-4640-B3A6-5445951865BB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SGAWrapper Examples", "SGAWrapper Examples\SGAWrapper Examples.csproj", "{4FC6C596-EF02-4640-B3A6-5445951865BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
