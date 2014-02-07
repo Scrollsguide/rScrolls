@@ -36,6 +36,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -44,11 +45,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PlayerStatistics.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scroll.cs" />
     <Compile Include="ScrollsGuideApi.cs" />
     <Compile Include="ScrollsGuideException.cs" />
-    <Compile Include="ScrollsStatistics.cs" />
+    <Compile Include="GameStatistics.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

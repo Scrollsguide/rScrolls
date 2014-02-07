@@ -1,9 +1,9 @@
 ﻿namespace SGAWrapper
 {
-  public class ScrollsStatistics
+  public class GameStatistics
   {
 
-    internal ScrollsStatistics(dynamic stats)
+    internal GameStatistics(dynamic stats)
     {
       OnlineToday = (int) stats.data.onlinetoday;
       TotalScrolls = (int) stats.data.totalscrolls;

@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -9,7 +11,13 @@ namespace SGAWrapper
   public class ScrollsGuideApi
   {
 
+    public enum ImageSize
+    {
+      Small, Large
+    }
+
     private const string BaseApiUrl = "http://a.scrollsguide.com/";
+    private static readonly WebClient WebClient = new WebClient();
 
     private ScrollsGuideApi() {}
 
@@ -19,10 +27,10 @@ namespace SGAWrapper
       return (int) onlinePlayers.data.online;
     }
 
-    public static ScrollsStatistics GetScrollsStatistics()
+    public static GameStatistics GetGameStatistics()
     {
       dynamic stats = GetJson("statistics");
-      return new ScrollsStatistics(stats);
+      return new GameStatistics(stats);
     }
 
     public static Scroll GetScroll(string name)
@@ -54,14 +62,26 @@ namespace SGAWrapper
       return scrollsList.ToArray();
     }
 
+    public static Image GetScrollImage(string name, ImageSize size)
+    {
+      byte[] data = WebClient.DownloadData(BaseApiUrl + "image/screen?name=" + name + "&size=" + (size == ImageSize.Small ? "small" : "large"));
+      using (MemoryStream stream = new MemoryStream(data))
+      {
+         return Image.FromStream(stream, false, true);
+      }
+    }
 
+    public static PlayerStatistics GetPlayerStatistics(string name)
+    {
+      dynamic player = GetJson("player?name=" + name + "&fields=all");
+      return new PlayerStatistics(player);
+    }
 
     #region Private helpers methods
 
     private static dynamic GetJson(string url)
     {
-      WebClient webClient = new WebClient();
-      string json = webClient.DownloadString(HttpUtility.HtmlEncode(BaseApiUrl + url));
+      string json = WebClient.DownloadString(BaseApiUrl + url);
       dynamic container =  JsonConvert.DeserializeObject(json);
       if (container.msg != "success")
       {
